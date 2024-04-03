@@ -34,3 +34,16 @@ export const GetInvestigador = async (req, res) => {
         })
     }
 }
+
+export const PerfilInvestigador = async (req, res) => {
+    try {
+    const [rows] = await pool.query("SELECT * FROM investigador WHERE correo = ?" , [req.params.correo]);
+    res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+}
