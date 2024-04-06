@@ -22,3 +22,6 @@ create table perfilEstudiante(
 
     foreign key (correo) references estudiante(correo)
 );
+
+alter table actividad_participante modify column correo varchar(60);
+alter table actividad_participante modify column observaciones text;
