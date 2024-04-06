@@ -36,3 +36,20 @@ export const GetProyectos = async (req, res) => {
         })
     }
 }
+
+export const proyectosInvestigador = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM proyectosInvestigador WHERE correo = ? COLLATE utf8mb4_unicode_ci", [req.params.correo])
+        res.send(rows)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+}
+
+export const proyectoPorId = async (req, res) => {
+    
+}
