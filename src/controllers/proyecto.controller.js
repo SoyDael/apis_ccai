@@ -51,5 +51,27 @@ export const proyectosInvestigador = async (req, res) => {
 }
 
 export const proyectoPorId = async (req, res) => {
-    
+    try {
+        const [rows] = await pool.query("SELECT * FROM proyecto WHERE id_proyecto = ?", [req.params.id_proyecto]);
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+}
+
+export const participantePorProyecto = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM participanteProyecto WHERE proyecto_id = ?", [req.params.proyecto_id]);
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
 }
