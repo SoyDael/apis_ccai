@@ -65,7 +65,7 @@ export const actualizarPerfilAlumno = async (req, resp) => {
                 message: "¡Estudiante no encontrado!"
             });
         } 
-        const [rows] = await pool.query("SELECT * FROM estudiante WHERE correo = ?", [req.params.correo]);
+        const [rows] = await pool.query("SELECT * FROM estudiante WHERE correo = ? ", [req.params.correo]);
 
         resp.send(rows[0]);
     }catch (error) {
