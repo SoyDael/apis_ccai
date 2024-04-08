@@ -3,23 +3,23 @@ import { pool } from "../db.js";
 export const PostParticipante = async (req, res) => {
     const {
         proyecto_id, id_estudiante, correo_estudiante,
-        tipo_programa} = req.body;
+        tipo_programa } = req.body;
 
-        try {
-            const [rows] = await pool.query("INSERT INTO participante (proyecto_id, id_estudiante, correo_estudiante, tipo_programa) VALUES (?, ?, ?, ?)", [proyecto_id, id_estudiante, correo_estudiante, tipo_programa]);
-            res.send({
-                id: rows.insertId,
-                proyecto_id,
-                id_estudiante,
-                correo_estudiante,
-                tipo_programa
-            })
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({
-                message: "algo salio mal UwU"
-            })
-        }
+    try {
+        const [rows] = await pool.query("INSERT INTO participante (proyecto_id, id_estudiante, correo_estudiante, tipo_programa) VALUES (?, ?, ?, ?)", [proyecto_id, id_estudiante, correo_estudiante, tipo_programa]);
+        res.send({
+            id: rows.insertId,
+            proyecto_id,
+            id_estudiante,
+            correo_estudiante,
+            tipo_programa
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "algo salio mal UwU"
+        })
+    }
 }
 
 export const GetParticipante = async (req, res) => {
