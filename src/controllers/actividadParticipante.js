@@ -3,18 +3,18 @@ import { pool } from "../db.js";
 export const PostActividad = async (req, res) => {
     const {
         id_proyecto, id_estudiante, correo_estudiante,
-        tipo_programa, semestre, id_actividad, fecha_inicio,
+        id_programa, semestre, id_actividad, fecha_inicio,
         fecha_fin, actividad, observaciones
     } = req.body;
 
     try {
-        const [rows] = await pool.query("INSERT INTO actividad_participante (id_proyecto, id_estudiante, correo_estudiante, tipo_programa, semestre, id_actividad, fecha_inicio, fecha_fin, actividad, observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_proyecto, id_estudiante, correo_estudiante, tipo_programa, semestre, id_actividad, fecha_inicio, fecha_fin, actividad, observaciones]);
+        const [rows] = await pool.query("INSERT INTO actividad_participante (id_proyecto, id_estudiante, correo_estudiante, id_programa, semestre, id_actividad, fecha_inicio, fecha_fin, actividad, observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_proyecto, id_estudiante, correo_estudiante, id_programa, semestre, id_actividad, fecha_inicio, fecha_fin, actividad, observaciones]);
         res.send({
             id: rows.insertId,
             id_proyecto,
             id_estudiante,
             correo_estudiante,
-            tipo_programa,
+            id_programa,
             semestre,
             id_actividad,
             fecha_inicio,

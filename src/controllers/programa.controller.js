@@ -33,3 +33,15 @@ export const getProgramas = async (req, res) => {
         })
     }
 }
+
+export const getProgramaByCorreo = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM programa WHERE estudiante_correo = ?", [req.params.estudiante_correo]);
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!"
+        });
+    }
+}
