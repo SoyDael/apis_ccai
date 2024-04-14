@@ -82,7 +82,3 @@ export const consultaUsuario = async (req, res) => {
         })
     }
 }
-
-export const cerrarSesion =  async (req, res) => {
-    
-}
