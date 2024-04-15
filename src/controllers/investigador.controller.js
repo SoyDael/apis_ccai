@@ -47,3 +47,16 @@ export const PerfilInvestigador = async (req, res) => {
         });
     }
 }
+
+export const navbarInvestigador = async (req, res) => {
+    try {
+        const [filas] = await pool.query("SELECT * FROM navbarInvestigador WHERE correo = ? ", [req.params.correo])
+        res.send(filas);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+}
