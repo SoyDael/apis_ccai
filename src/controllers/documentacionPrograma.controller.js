@@ -1,29 +1,72 @@
 import { pool } from "../db.js";
-import fs from "fs-extra";
 
 export const agregarDocumentacionPrograma = async (req, res) => {
-    const { id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo } = req.body;
-
-    const arvoBuffer = Buffer.from(archivo, 'base64');
-
     try {
-        const [lau] = pool.query("INSERT INTO documentacion_programa(id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, arvoBuffer],
-            (err, result) => {
-                if (err) {
-                    console.log( "error al agregar el documento",err);
-                    res.status(500).send("Error en el servidor");
-                    return;
-                } 
-                    res.status(201).send("Documento agregado correctamente", result.insertId);
-            })
+        const { id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo } = req.body;
+        const [rows] = await pool.query("INSERT INTO documentacion_programa(id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo]);
+        res.send({
+            id: rows.insertId,
+            id_programa,
+            fecha,
+            descripcion: documento,
+            archivo,
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({
             message: "¡Algo salió mal UwU!",
-            error
+            error,
         });
     }
-    
+}
+
+export const obtenerDocumentacionPrograma = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM documentacion_programa");
+        res.json(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error,
+        });
+    }
+
+}
+
+export const obtenerDocumentacionProgramaPorId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [rows] = await pool.query("SELECT * FROM documentacion_programa WHERE id = ?", [id]);
+        res.json(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error,
+        });
+    }
+}
+
+export const actualizarDocumentacionPrograma = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo } = req.body;
+        const [rows] = await pool.query("UPDATE documentacion_programa SET id_estudiante = ?, correo_estudiante = ?, id_programa = ?, id_documento = ?, semestre = ?, fecha = ?, nombre = ?, documento = ?, archivo = ? WHERE id = ?", [id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo, id]);
+        res.json({
+            id,
+            id_programa,
+            fecha,
+            descripcion: documento,
+            archivo,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error,
+        });
+    }
 }
 
 
