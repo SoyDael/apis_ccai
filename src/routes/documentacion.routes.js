@@ -8,9 +8,7 @@ const router = Router();
 
 router.post("/registroDocumentacionPrograma", verifyToken, agregarDocumentacionPrograma);
 router.get("/obtenerDocumentacionPrograma", verifyToken, obtenerDocumentacionPrograma);
-router.patch("/actualizarDocumentacionPrograma/:id_documento", 
-express.json({limit: '100MB', extended: true})
-, verifyToken, actualizarDocumentacionPrograma);
+router.patch("/actualizarDocumentacionPrograma/:id_documento", verifyToken, actualizarDocumentacionPrograma);
 
 export default router;
 

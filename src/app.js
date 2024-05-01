@@ -17,11 +17,14 @@ const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+express.json({limit: '100MB', extended: true})//aqui mero
 
 app.use('/api/ccai/v1/auth', authRoutes);
 app.use('/api/ccai/v1', estudianteRoutes, programaRoutes, investigadorRoutes, proyectoRoutes,
     participanteRoutes, plantTrabajoRoutes, actividadParticipanteRoutes, viewRoutes, 
     documentacionRoutes);
+
+    // en cual?
 
 app.use((req, res, next) => {
     res.status(404).json({
