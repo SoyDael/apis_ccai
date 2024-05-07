@@ -9,8 +9,7 @@ import proyectoRoutes from './routes/proyecto.routes.js';
 import participanteRoutes from './routes/participante.routes.js';
 import plantTrabajoRoutes from  './routes/planTrabajo.routes.js'
 import actividadParticipanteRoutes from './routes/actividadParticipante.routes.js'
-import { consultaUsuario } from './controllers/auth.controller.js';
-import viewRoutes from './routes/views/views.routes.js';
+import documentacionPrograma from "./routes/documentacionPrograma.routes.js"
 
 const app = express();
 
@@ -20,7 +19,8 @@ app.use(express.json());
 
 app.use('/api/ccai/v1/auth', authRoutes);
 app.use('/api/ccai/v1', estudianteRoutes, programaRoutes, investigadorRoutes, proyectoRoutes,
-    participanteRoutes, plantTrabajoRoutes, actividadParticipanteRoutes, consultaUsuario, viewRoutes);
+    participanteRoutes, plantTrabajoRoutes, actividadParticipanteRoutes, 
+    documentacionPrograma);
 
 app.use((req, res, next) => {
     res.status(404).json({
