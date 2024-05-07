@@ -82,3 +82,25 @@ export const consultaUsuario = async (req, res) => {
         })
     }
 }
+
+
+export const recuperarContrasena = async (req, res) => {
+    try{
+        const { correo } = req.params;
+        const { password, tipo, foto} = req.body;
+      
+        const [result] = await pool.query('UPDATE usuario set password = ? where correo = ?', [password, correo])
+        if (result.affectedRows === 0) {
+            res.json({ message: "No se pudo actualizar la contraseña" });
+        }
+        
+        const [rows] = await pool.query('SELECT * FROM usuario WHERE correo = ?', [correo])
+        res.json(rows);
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            message: 'algo salio mal :C'
+        })
+    }
+}
