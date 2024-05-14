@@ -6,7 +6,7 @@ const router = Router();
 router.post('/register', register);
 router.post('/login', login);
 router.get('/consultaUsuario', verifyToken, consultaUsuario)
-router.patch('/recuperarContrasena/:correo', recuperarContrasena);
+router.patch('/recuperarContrasena', recuperarContrasena);
 
 
 export default router;
