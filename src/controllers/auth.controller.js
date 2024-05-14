@@ -85,24 +85,23 @@ export const consultaUsuario = async (req, res) => {
 
 
 export const recuperarContrasena = async (req, res) => {
-    try{
-        const { correo } = req.params;
-        const { password, tipo, foto} = req.body;
+    try {
+        const { correo, password } = req.body;
         const hashPassword = await bcrypt.hash(password, 10);
 
-      
-        const [result] = await pool.query('UPDATE usuario set password = ? where correo = ?', [hashPassword, correo])
-        if (result.affectedRows === 0) {
-            res.json({ message: "No se pudo actualizar la contraseña" });
-        }
+        const [result] = await pool.query('UPDATE usuario SET password = ? WHERE correo = ?', [hashPassword, correo]);
         
-        const [rows] = await pool.query('SELECT * FROM usuario WHERE correo = ?', [correo])
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "El usuario no existe o no se pudo actualizar la contraseña" });
+        }
+
+        const [rows] = await pool.query('SELECT * FROM usuario WHERE correo = ?', [correo]);
         res.json(rows);
 
-    }catch(error){
-        console.log(error);
+    } catch (error) {
+        console.error(error);
         return res.status(500).json({
-            message: 'algo salio mal :C'
-        })
+            message: 'Algo salió mal :C'
+        });
     }
 }

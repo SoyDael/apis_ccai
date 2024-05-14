@@ -54,10 +54,10 @@ export const obtenerDocumentacionProgramaPorId = async (req, res) => {
 export const actualizarDocumentacionPrograma = async (req, res) => {
 
     const { id_documento } = req.params;
-    const { id_estudiante, correo_estudiante, id_programa, semestre, fecha, nombre, documento, archivo } = req.body;
+    const { id_estudiante, correo_estudiante, id_programa, semestre, fecha, nombre, documento, archivo, id_proyecto } = req.body;
     try {
 
-        const [result] = await pool.query("UPDATE documentacion_programa SET id_estudiante = IFNULL(?, id_estudiante), correo_estudiante = IFNULL(?, correo_estudiante), id_programa = IFNULL(?, id_programa), semestre = IFNULL(?, semestre), fecha = IFNULL(?, fecha), nombre = IFNULL(?, nombre), documento = IFNULL(?, documento), archivo = IFNULL(?, archivo) WHERE id_documento = ?", [id_estudiante, correo_estudiante, id_programa, semestre, fecha, nombre, documento, archivo, id_documento]);
+        const [result] = await pool.query("UPDATE documentacion_programa SET id_estudiante = IFNULL(?, id_estudiante), correo_estudiante = IFNULL(?, correo_estudiante), id_programa = IFNULL(?, id_programa), semestre = IFNULL(?, semestre), fecha = IFNULL(?, fecha), nombre = IFNULL(?, nombre), documento = IFNULL(?, documento), archivo = IFNULL(?, archivo), id_proyecto = IFNULL(?, id_proyecto) WHERE id_documento = ?", [id_estudiante, correo_estudiante, id_programa, semestre, fecha, nombre, documento, archivo, id_proyecto, id_documento]);
         if (result.affectedRows === 0) {
             res.json({ message: "No se encontró el documento a actualizar" });
         }
