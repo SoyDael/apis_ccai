@@ -88,8 +88,10 @@ export const recuperarContrasena = async (req, res) => {
     try{
         const { correo } = req.params;
         const { password, tipo, foto} = req.body;
+        const hashPassword = await bcrypt.hash(password, 10);
+
       
-        const [result] = await pool.query('UPDATE usuario set password = ? where correo = ?', [password, correo])
+        const [result] = await pool.query('UPDATE usuario set password = ? where correo = ?', [hashPassword, correo])
         if (result.affectedRows === 0) {
             res.json({ message: "No se pudo actualizar la contraseña" });
         }
