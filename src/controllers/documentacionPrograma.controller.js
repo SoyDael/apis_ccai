@@ -39,8 +39,8 @@ export const obtenerDocumentacionPrograma = async (req, res) => {
 
 export const obtenerDocumentacionProgramaPorId = async (req, res) => {
     try {
-        const { id } = req.params;
-        const [rows] = await pool.query("SELECT * FROM documentacion_programa WHERE id = ?", [id]);
+        const { id_proyecto } = req.params;
+        const [rows] = await pool.query("SELECT * FROM documentacion_programa WHERE id_proyecto = ?", [id_proyecto]);
         res.json(rows);
     } catch (error) {
         console.log(error);
