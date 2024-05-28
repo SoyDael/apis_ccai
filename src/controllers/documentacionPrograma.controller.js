@@ -5,8 +5,8 @@ import fs from "fs";
 
 export const agregarDocumentacionPrograma = async (req, res) => {
     try {
-        const { id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo } = req.body;
-        const [rows] = await pool.query("INSERT INTO documentacion_programa(id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo]);
+        const { id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo, id_proyecto } = req.body;
+        const [rows] = await pool.query("INSERT INTO documentacion_programa(id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo, id_proyecto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_estudiante, correo_estudiante, id_programa, id_documento, semestre, fecha, nombre, documento, archivo, id_proyecto]);
         res.send({
             id: rows.insertId,
             id_programa,
@@ -49,6 +49,21 @@ export const obtenerDocumentacionProgramaPorId = async (req, res) => {
             error,
         });
     }
+}
+
+export const obtenerDocumentacionProgramaPorCorreoEstudiante = async (req, res) => {
+    try {
+        const { correo_estudiante } = req.params;
+        const [rows] = await pool.query("SELECT * FROM documentacion_programa WHERE correo_estudiante = ?", [correo_estudiante]);
+        res.json(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error,
+        });
+    }
+
 }
 
 export const actualizarDocumentacionPrograma = async (req, res) => {
