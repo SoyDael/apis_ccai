@@ -15,9 +15,11 @@ export const PostParticipante = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
-            message: "algo salio mal UwU"
-        })
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ error: 'El alumno ya está registrado en un proyecto.' });
+        } else {
+            return res.status(500).json({ error: 'Ocurrió un error en el servidor.' });
+        }
     }
 }
 

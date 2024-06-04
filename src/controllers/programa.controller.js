@@ -15,16 +15,17 @@ export const postPrograma = async (req, res) => {
             fecha_fin
         })
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: "algo salio mal UwU"
-        })
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ error: 'El alumno ya está registrado en un programa.' });
+        } else {
+            return res.status(500).json({ error: 'Ocurrió un error en el servidor.' });
+        }
     }
 }
 
 export const getProgramas = async (req, res) => {
     try {
-        const [rows] = await pool.query("SELECT * FROM programa");
+        const [rows] = await pool.query("SELECT * FROM programaEstudiante");
         res.json(rows);
     } catch (error) {
         console.log(error);
