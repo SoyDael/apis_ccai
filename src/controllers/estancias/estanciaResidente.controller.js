@@ -1,4 +1,4 @@
-import { pool } from "../db.js";
+import { pool } from "../../db.js";
 
 export const registroEstanciaResidente = async (req, res) => {
     const {id_estancia_residente, nombres, apellido_p, apellido_m, correo, correo_adicional, telefono, estatus} = req.body;
