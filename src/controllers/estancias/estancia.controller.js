@@ -1,4 +1,3 @@
-import { query } from "express";
 import { pool } from "../../db.js";
 
 export const registroEstancias = async (req, res) => {
