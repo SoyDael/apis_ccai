@@ -58,3 +58,15 @@ export const participantePorProyecto = async (req, res) => {
         })
     }
 }
+
+export const eliminarParticipante = async (req, res) => {
+    const {correo_estudiante} = req.params;
+    try {
+        const [rows] = await pool.query("DELETE FROM participante WHERE correo_estudiante = ?", [correo_estudiante]);
+        res.json({
+            message: "alumno eliminado de proyecto"
+        })
+    } catch (error) {
+        
+    }
+}
