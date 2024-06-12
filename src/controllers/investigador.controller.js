@@ -63,14 +63,15 @@ export const navbarInvestigador = async (req, res) => {
 
 export const editarinvestigador = async (req, res) => {
     const { correo } = req.params;
-    const { titulo, nombres, apellido_p, apellido_m, telefono, estatus, foto } = req.body;
+    const { titulo, nombres, apellido_p, apellido_m, telefono, estatus } = req.body;
     try {
-        const [dael] = await pool.query("UPDATE investigador SET titulo = IFNULL(?, titulo), nombres = IFNULL(?, nombres), apellido_p = IFNULL(?, apellido_p), apellido_m = IFNULL(?, apellido_m), telefono = IFNULL(?, telefono), estatus = IFNULL(?, estatus), foto = IFNULL(?, foto) WHERE correo = ?", [titulo, nombres, apellido_p, apellido_m, telefono, estatus, foto, correo]);
+        const [dael] = await pool.query("UPDATE investigador SET titulo = IFNULL(?, titulo), nombres = IFNULL(?, nombres), apellido_p = IFNULL(?, apellido_p), apellido_m = IFNULL(?, apellido_m), telefono = IFNULL(?, telefono), estatus = IFNULL(?, estatus) WHERE correo = ?", [titulo, nombres, apellido_p, apellido_m, telefono, estatus, correo]);
         if (dael.affectedRows === 0) {
-            res.json({
+            return res.status(404).json({
                 message: "¡Investigador no encontrado!"
             });
         }
+        
         const [rows] = await pool.query("SELECT * FROM investigador WHERE correo = ? ", [req.params.correo]);
         res.send(rows);
 
