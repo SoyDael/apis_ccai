@@ -53,3 +53,15 @@ export const perfilEstancia = async (req, res) => {
     }
 }
 
+export const ListadoEstancias = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM ListadoEstancias");
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+}
