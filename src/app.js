@@ -14,6 +14,7 @@ import documentacionRoutes from './routes/documentacion.routes.js'
 import estanciasResidentes from './routes/Estancias/estanciasResidente.routes.js'
 import estancia from './routes/Estancias/estancia.routes.js'
 import participanteEstancias from './routes/Estancias/partcipanteEstancia.routes.js'
+import actividadEstancias from './routes/Estancias/actividad_estancia.routes.js'
 
 const app = express();
 
@@ -25,7 +26,7 @@ express.json({limit: '100MB', extended: true})//aqui mero
 app.use('/api/ccai/v1/auth', authRoutes);
 app.use('/api/ccai/v1', estudianteRoutes, programaRoutes, investigadorRoutes, proyectoRoutes,
     participanteRoutes, plantTrabajoRoutes, actividadParticipanteRoutes, viewRoutes, 
-    documentacionRoutes, estanciasResidentes, estancia, participanteEstancias);
+    documentacionRoutes, estanciasResidentes, estancia, participanteEstancias, actividadEstancias);
 
     // en cual?
 
