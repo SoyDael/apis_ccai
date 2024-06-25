@@ -59,3 +59,16 @@ export const participantePorProyecto = async (req, res) => {
         })
     }
 }
+
+export const participanteEstanciaProyecto = async (req, res) => {
+    const {id_proyecto} = req.params;
+    try {
+        const [rows] = await pool.query("SELECT * FROM particpanteEstanciaProyecto WHERE id_proyecto = ?", [id_proyecto]);
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "algo salio mal UwU"
+        })
+    }
+}

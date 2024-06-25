@@ -17,12 +17,11 @@ export const registroEstancias = async (req, res) => {
             tipoEstancia
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: "¡Algo salió mal UwU!",
-            error,
-            
-        });
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ error: 'El alumno ya está registrado en un programa.' });
+        } else {
+            return res.status(500).json({ error: 'Ocurrió un error en el servidor.' });
+        }
     }
 }
 
