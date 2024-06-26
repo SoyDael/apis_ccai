@@ -6,7 +6,6 @@ export const registroEstancias = async (req, res) => {
     try {
         const {rows} = await pool.query("INSERT INTO estancia(id_estancia, id_estancia_residente, residente_correo, estatus, fecha_inicio, fecha_fin, procedencia, patrocinador, tipoEstancia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [id_estancia, id_estancia_residente, residente_correo, estatus, fecha_inicio, fecha_fin, procedencia, patrocinador, tipoEstancia]);
         res.send({
-            id_estancia: rows.insertId,
             id_estancia_residente,
             residente_correo,
             estatus,
@@ -20,7 +19,8 @@ export const registroEstancias = async (req, res) => {
         if (error.code === 'ER_DUP_ENTRY') {
             return res.status(400).json({ error: 'El alumno ya está registrado en un programa.' });
         } else {
-            return res.status(500).json({ error: 'Ocurrió un error en el servidor.' });
+            console.log(error);
+            return res.status(500).json({ error: 'Ocurrió un error en el servidor.', error });
         }
     }
 }
