@@ -15,20 +15,20 @@ import estanciasResidentes from './routes/Estancias/estanciasResidente.routes.js
 import estancia from './routes/Estancias/estancia.routes.js'
 import participanteEstancias from './routes/Estancias/partcipanteEstancia.routes.js'
 import actividadEstancias from './routes/Estancias/actividad_estancia.routes.js'
+import pruebasPA from './routes/PruebaPA.routes.js'
 
 const app = express();
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-express.json({limit: '100MB', extended: true})//aqui mero
+express.json({limit: '100MB', extended: true})
 
 app.use('/api/ccai/v1/auth', authRoutes);
 app.use('/api/ccai/v1', estudianteRoutes, programaRoutes, investigadorRoutes, proyectoRoutes,
     participanteRoutes, plantTrabajoRoutes, actividadParticipanteRoutes, viewRoutes, 
-    documentacionRoutes, estanciasResidentes, estancia, participanteEstancias, actividadEstancias);
+    documentacionRoutes, estanciasResidentes, estancia, participanteEstancias, actividadEstancias, pruebasPA);
 
-    // en cual?
 
 app.use((req, res, next) => {
     res.status(404).json({
