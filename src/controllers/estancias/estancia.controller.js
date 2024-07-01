@@ -38,6 +38,20 @@ export const consultaEstancias = async (req, res) => {
     }
 }
 
+
+export const consultaEstanciaPorCorreo = async (req, res) => {
+    try {
+        const [rows] = await pool.query("SELECT * FROM estancia WHERE residente_correo = ?",  [req.params.residente_correo]);
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+} 
+
 export const perfilEstancia = async (req, res) => {
     const {correo} = req.params;
     try {
