@@ -1,9 +1,13 @@
 import { pool } from "../db.js";
+import bcrypt from "bcryptjs";
+
 
 export const altaUsuarios = async (req, res) => {
     const { correo, password, tipo, foto, titulo, nombres, apellido_p, apellido_m, matricula, correo_adicional, telefono, division, estatus } = req.body;
     try {
-        const [rows] = await pool.query("CALL insertar_usuario_ (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [correo, password, tipo, foto, titulo, nombres, apellido_p, apellido_m, matricula, correo_adicional, telefono, division, estatus]);
+        const hashPassword = await bcrypt.hash(password, 10);
+
+        const [rows] = await pool.query("CALL insertar_usuario_ (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [correo, hashPassword, tipo, foto, titulo, nombres, apellido_p, apellido_m, matricula, correo_adicional, telefono, division, estatus]);
         res.send({
             id: rows.insertId,
             correo,

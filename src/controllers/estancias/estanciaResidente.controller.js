@@ -39,6 +39,27 @@ export const consultaEstanciaResidente = async (req, res) => {
     }
 }
 
+export const perfilEstanciaResidente = async (req, res) => {
+    const {correo} = req.params;
+    try {
+        const [rows] = await pool.query("SELECT * FROM estancia_residente WHERE correo = ?", [correo]);
+        if (rows.length === 0) {
+            res.status(404).json({
+                message: "No se encontró el perfil de la estancia"
+            });
+            return;
+        }
+        res.send(rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "¡Algo salió mal UwU!",
+            error
+        });
+    }
+
+}
+
 export const actualizarPerfilEstancia = async (req, res) => {
     const {correo} = req.params;
     const {id_estancia_residente, nombres, apellido_p, apellido_m, correo_adicional, telefono, estatus} = req.body;
